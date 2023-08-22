@@ -58,3 +58,38 @@ jobs:
         $DOCKER_TAG=Get-Date -Format "MM-dd-yyyy_$BuildId"
         sed -i s#DOCKER_TAG#$DOCKER_TAG# ./docker/deployment.yaml
         cat ./docker/deployment.yaml
+        if(test-path "./docker/deployment.yaml"){
+        write-host "deployment file found"
+        kubectl apply -f "./docker/deployment.yaml"
+        if($LastExitCode -ne 0){
+        write-error "deployment failed into aks"
+        exit 1
+        }
+        else
+        {
+         write-host "deployment went successfully"
+        }
+        }
+        else
+        {
+         write-error "deployment.yaml is not found in the path"
+         exit 1
+        }
+
+        if(test-path "./docker/service.yaml"){
+        write-host "service file found"
+        kubectl apply -f "./docker/service.yaml"
+        if($LastExitCode -ne 0){
+        write-error "service failed into aks"
+        exit 1
+        }
+        else
+        {
+         write-host "service went successfully"
+        }
+        }
+        else
+        {
+         write-host "service.yaml is not found in the path"         
+        }
+        
