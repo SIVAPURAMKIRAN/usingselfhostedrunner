@@ -53,9 +53,7 @@ jobs:
     - name: az login
       run: |
         az login --service-principal -u ${{secrets.user}} -p ${{secrets.password}} -t "5461eb53-e0fd-4320-92ff-c6efe1fe91e9"        
-    - name: Create name space
-      run: |
-        kubectl create namespace "lobpoc"
+    
     - name: push file into aks
       shell: pwsh
       run: |
@@ -71,6 +69,7 @@ jobs:
         }
         else{
         write-host "login successful"
+        kubectl create namespace "lobpoc"
         }
         if(test-path "./docker/deployment.yaml"){
         write-host "deployment file found"
