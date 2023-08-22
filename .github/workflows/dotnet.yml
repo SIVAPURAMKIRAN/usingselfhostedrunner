@@ -59,7 +59,7 @@ jobs:
         sed -i s#DOCKER_TAG#$DOCKER_TAG# ./docker/deployment.yaml
         cat ./docker/deployment.yaml
         write-host "login into azure kubernates service"
-        az aks get-credentials --name "lob-terraform-aks" --resouce-group "lob-poc-rg-aks" --admin
+        az aks get-credentials --name "lob-terraform-aks" --resource-group "lob-poc-rg-aks" --admin
         if($LastExitCode -ne 0){
         write-error "Login into aks failed"
         exit 1
